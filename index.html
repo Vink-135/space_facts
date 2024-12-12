@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Facts Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background: #2a2a4a;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #00ff88;
+            color: #1a1a2e;
+        }
+
+        .facts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .fact-card .category {
+            color: #00ff88;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .fact-card .fact {
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Space Facts Explorer</h1>
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All Facts</button>
+            <button class="filter-btn" data-category="Milky Way">Milky Way</button>
+            <button class="filter-btn" data-category="Space Exploration">Space Exploration</button>
+        </div>
+        <div class="facts-container" id="factsContainer"></div>
+    </div>
+
+    <script>
+        const spaceFacts = {
+            "space_facts": [
+                {"id":1,"category":"Milky Way","fact":"The Milky Way is estimated to contain 100-400 billion stars"},
+                {"id":2,"category":"Space Exploration","fact":"Yuri Gagarin became the first human in space on April 12, 1961"},
+                {"id":3,"category":"Milky Way","fact":"Our galaxy is approximately 100,000 light-years in diameter"},
+                {"id":4,"category":"Space Exploration","fact":"The first Moon landing occurred on July 20, 1969, during NASA's Apollo 11 mission"},
+                {"id":5,"category":"Milky Way","fact":"The Milky Way is part of a group of galaxies called the Local Group"},
+                {"id":6,"category":"Space Exploration","fact":"The International Space Station orbits Earth at approximately 17,500 miles per hour"},
+                {"id":7,"category":"Milky Way","fact":"A supermassive black hole called Sagittarius A* lies at the center of our galaxy"},
+                {"id":8,"category":"Space Exploration","fact":"Valentina Tereshkova was the first woman in space, launching on June 16, 1963"},
+                {"id":9,"category":"Milky Way","fact":"Our solar system is located about 27,000 light-years from the galactic center"},
+                {"id":10,"category":"Space Exploration","fact":"The Voyager 1 spacecraft is the most distant human-made object from Earth"},
+                {"id":11,"category":"Milky Way","fact":"The Milky Way is believed to be approximately 13.6 billion years old"},
+                {"id":12,"category":"Space Exploration","fact":"The first spacewalk was performed by Alexei Leonov on March 18, 1965"},
+                {"id":13,"category":"Milky Way","fact":"Our galaxy is moving through space at approximately 600 km/s"},
+                {"id":14,"category":"Space Exploration","fact":"SpaceX became the first private company to send humans to the ISS in 2020"},
+                {"id":15,"category":"Milky Way","fact":"The Milky Way completes one rotation every 225-250 million years"},
+                {"id":16,"category":"Space Exploration","fact":"The Hubble Space Telescope was launched into orbit in 1990"},
+                {"id":17,"category":"Milky Way","fact":"Our galaxy is on a collision course with the Andromeda galaxy in about 4.5 billion years"},
+                {"id":18,"category":"Space Exploration","fact":"Mars Curiosity Rover has been exploring Mars since its landing in 2012"},
+                {"id":19,"category":"Milky Way","fact":"The Milky Way contains at least 100 billion planets"},
+                {"id":20,"category":"Space Exploration","fact":"The James Webb Space Telescope is the largest and most powerful space telescope ever built"}
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const factsContainer = document.getElementById('factsContainer');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            // Initial render
+            renderFacts('all');
+
+            // Add click events to filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderFacts(button.dataset.category);
+                });
+            });
+
+            function renderFacts(category) {
+                factsContainer.innerHTML = '';
+                
+                spaceFacts.space_facts.forEach(fact => {
+                    if (category === 'all' || category === fact.category) {
+                        const factCard = document.createElement('div');
+                        factCard.className = 'fact-card';
+                        factCard.innerHTML = `
+                            <div class="category">${fact.category}</div>
+                            <div class="fact">${fact.fact}</div>
+                        `;
+                        factsContainer.appendChild(factCard);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
